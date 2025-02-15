@@ -1,4 +1,3 @@
-import Counter from './components/Counter'
 import ThemeToggle from './components/ThemeToggle'
 import { ThemeProvider } from './context/ThemeContext'
 import { store } from './store/store'
@@ -10,7 +9,7 @@ function App() {
     <Provider store={store} >
       <ThemeProvider>
         <ThemeToggle />
-        <Counter />
+        {/* <Counter /> */}
       </ThemeProvider>
     </Provider>
   )

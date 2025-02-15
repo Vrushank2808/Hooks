@@ -1,9 +1,9 @@
 import { useCallback, useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { decrement, increment } from "../slice/counterSlice";
+import { decrement, increment, reset } from "../slice/counterSlice";
 import { useTheme } from "../context/ThemeContext";
 
-function Counter() {
+function Counter({ styles }) {
   const count = useSelector((state) => state.counter.value);
   const dispatch = useDispatch();
   const { state: { isDark } } = useTheme();
@@ -16,24 +16,20 @@ function Counter() {
     dispatch(decrement());
   }, [dispatch]);
 
+  const handleReset = useCallback(() => {
+    dispatch(reset());
+  }, [dispatch]);
+
   const doubleCount = useMemo(() => count * 2, [count]);
 
-  const style = {
-    backgroundColor: isDark ? "#222" : "#f9f9f9",
-    padding: "20px",
-    borderRadius: "8px",
-    color: isDark ? "#fff" : "#000",
-    textAlign: "center",
-    boxShadow: isDark ? "0 4px 8px rgba(0, 0, 0, 0.3)" : "0 4px 8px rgba(0, 0, 0, 0.1)"
-  };
-
   return (
-    <div style={style}>
-      <h2>Counter Component</h2>
-      <p>Current Count: {count}</p>
-      <p>Double Count: {doubleCount}</p>
-      <button onClick={handleIncrement}>Increment</button>
-      <button onClick={handleDecrement}>Decrement</button>
+    <div style={styles.counterContainer}>
+      <h2 style={styles.heading}>Counter Component</h2>
+      <p style={styles.text}>Current Count: {count}</p>
+      <p style={styles.text}>Double Count: {doubleCount}</p>
+      <button style={styles.counterButton} onClick={handleIncrement}>Increment</button>
+      <button style={styles.counterButton} onClick={handleDecrement}>Decrement</button>
+      <button style={styles.counterButton} onClick={handleReset}>Reset</button>
     </div>
   );
 }
